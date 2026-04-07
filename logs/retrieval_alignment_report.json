@@ -1,0 +1,12 @@
+{
+  "mode": "compliant_fallback",
+  "retrieval_attempted": false,
+  "alignment_status_counts": {
+    "not_applicable_fallback": 80062
+  },
+  "rows_needing_human_adjudication": 1007,
+  "review_queue_keys": [
+    "low_confidence",
+    "not_found"
+  ]
+}

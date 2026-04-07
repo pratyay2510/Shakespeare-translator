@@ -1,0 +1,9 @@
+reject_reason,count,percent_of_rejected_dialogue
+length_outlier,384,38.13
+unresolved_lexicon:marry,259,25.72
+unresolved_lexicon:prithee,137,13.6
+unresolved_lexicon:wherein,91,9.04
+unresolved_lexicon:betwixt,49,4.87
+unresolved_lexicon:therein,46,4.57
+unresolved_lexicon:forsooth,40,3.97
+"unresolved_lexicon:marry,prithee",1,0.1

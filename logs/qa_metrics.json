@@ -1,0 +1,38 @@
+{
+  "processed_rows": 80062,
+  "dialogue_rows": 79780,
+  "aligned_rows": 0,
+  "approved_rows": 78773,
+  "rejected_rows": 1007,
+  "reviewed_rows": 282,
+  "row_type_counts": {
+    "dialogue": 79780,
+    "speaker_label": 278,
+    "stage_direction": 4
+  },
+  "confidence_counts": {
+    "medium": 67764,
+    "high": 11291,
+    "low": 1007
+  },
+  "status_counts": {
+    "approved": 78773,
+    "reviewed": 282,
+    "rejected": 1007
+  },
+  "top_failure_categories": {
+    "length_outlier": 384,
+    "unresolved_lexicon:marry": 259,
+    "unresolved_lexicon:prithee": 137,
+    "unresolved_lexicon:wherein": 91,
+    "unresolved_lexicon:betwixt": 49,
+    "unresolved_lexicon:therein": 46,
+    "unresolved_lexicon:forsooth": 40,
+    "unresolved_lexicon:marry,prithee": 1
+  },
+  "rows_needing_human_adjudication": 1007,
+  "compliance_mode": "compliant_fallback",
+  "validation_passed": true,
+  "validation_errors": [],
+  "seed": 42
+}

@@ -1,0 +1,29 @@
+# Python cache/artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+shtrans/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Large model artifacts
+models/pretrained/**/model.safetensors
+models/checkpoints/
+
+# Logs and runtime outputs
+logs/*.log
+
+# OS/editor
+.DS_Store
+.vscode/
