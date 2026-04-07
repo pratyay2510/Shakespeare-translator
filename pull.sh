@@ -35,6 +35,9 @@ fi
 STASHED=0
 STASH_NAME="auto-stash pull.sh $(date '+%Y-%m-%d %H:%M:%S')"
 
+# Capture files that are newly added on remote so we can verify they exist after pull.
+REMOTE_ADDED_FILE_LIST=""
+
 # Auto-stash if there are local changes (tracked or untracked).
 if [[ -n "$(git status --porcelain)" ]]; then
   echo "Local changes detected. Stashing before pull..."
@@ -52,6 +55,10 @@ if ! git show-ref --verify --quiet "refs/remotes/$REMOTE/$BRANCH"; then
   exit 1
 fi
 
+REMOTE_ADDED_FILE_LIST="$(mktemp)"
+# These are files that exist on remote but not in current local HEAD.
+git diff --name-only --diff-filter=A HEAD.."$REMOTE/$BRANCH" > "$REMOTE_ADDED_FILE_LIST"
+
 echo "Rebasing local branch '$BRANCH' onto $REMOTE/$BRANCH ..."
 git pull --rebase "$REMOTE" "$BRANCH"
 
@@ -65,5 +72,26 @@ if [[ "$STASHED" -eq 1 ]]; then
     exit 2
   fi
 fi
+
+# Safety check: ensure files added from another device/remote are present locally.
+if [[ -n "$REMOTE_ADDED_FILE_LIST" && -s "$REMOTE_ADDED_FILE_LIST" ]]; then
+  MISSING_REMOTE_FILES=0
+  while IFS= read -r file; do
+    [[ -z "$file" ]] && continue
+    if [[ ! -e "$file" ]]; then
+      echo "Warning: expected remote-added file missing after pull: $file"
+      MISSING_REMOTE_FILES=1
+    fi
+  done < "$REMOTE_ADDED_FILE_LIST"
+
+  if [[ "$MISSING_REMOTE_FILES" -eq 1 ]]; then
+    echo "Pull completed but one or more remote-added files were not found locally."
+    echo "No cleanup was performed. Please inspect git status and resolve manually."
+    rm -f "$REMOTE_ADDED_FILE_LIST"
+    exit 3
+  fi
+fi
+
+[[ -n "$REMOTE_ADDED_FILE_LIST" ]] && rm -f "$REMOTE_ADDED_FILE_LIST"
 
 echo "Done: local repository is up to date with $REMOTE/$BRANCH"
