@@ -32,7 +32,14 @@ git add -A
 if git diff --cached --quiet; then
   echo "No local changes to commit."
 else
-  COMMIT_MSG="${1:-auto: update $(date '+%Y-%m-%d %H:%M:%S')}"
+  if [[ $# -ge 1 ]]; then
+    COMMIT_MSG="$1"
+  else
+    read -r -p "Enter commit message (leave blank for auto): " COMMIT_MSG
+    if [[ -z "${COMMIT_MSG// }" ]]; then
+      COMMIT_MSG="auto: update $(date '+%Y-%m-%d %H:%M:%S')"
+    fi
+  fi
   git commit -m "$COMMIT_MSG"
 fi
 
